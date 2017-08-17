@@ -41,7 +41,7 @@ public class Game extends ApplicationAdapter {
         mapLevelsTextures[0] = new Texture("map-level-1.png");
         mapLevelsTextures[1] = new Texture("map-level-2.png");
         //Cria jogador
-        texGoomba = new Texture("goomba.png"); //define a textura
+        texGoomba = new Texture("goomba-spritesheet.png"); //define a textura
         gmbGoomba = new Goomba(texGoomba);
         //Seta coordenadas maximas para que o jogador nao ultrapasse a tela
         gmbGoomba.setFltMaxHeight(mapLevelsTextures[0].getHeight());
