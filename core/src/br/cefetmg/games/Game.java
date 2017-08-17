@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -26,8 +25,8 @@ public class Game extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture[] mapLevelsTextures;
     private Texture texGoomba;
-    private Sprite sprGoomba;
-    private float[] fltPosition = new float[2]; 
+    private Goomba gmbGoomba;
+    
     /**
      * No método create colocamos código de inicialização do jogo. Por exemplo,
      * carregamos texturas, sons e outros recursos. Aqui também instanciamos
@@ -43,9 +42,10 @@ public class Game extends ApplicationAdapter {
         mapLevelsTextures[1] = new Texture("map-level-2.png");
         //Cria jogador
         texGoomba = new Texture("goomba.png"); //define a textura
-        sprGoomba = new Sprite(texGoomba); //cria o sprite
-        fltPosition[0] = 30; //Coordenada x
-        fltPosition[1] = 10; //Coordenada y
+        gmbGoomba = new Goomba(texGoomba);
+        //Seta coordenadas maximas para que o jogador nao ultrapasse a tela
+        gmbGoomba.setFltMaxHeight(mapLevelsTextures[0].getHeight());
+        gmbGoomba.setFltMaxWidth(mapLevelsTextures[0].getWidth());
         
         // cor de fundo da tela: branco
         Gdx.gl.glClearColor(1, 1, 1, 1);        
@@ -81,10 +81,8 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
-            sprGoomba.setPosition(fltPosition[0], fltPosition[1]); //seta a posicao
-            sprGoomba.draw(batch);
+            gmbGoomba.render(batch); //desenha o Goomba
             batch.draw(mapLevelsTextures[1], 0, 0);
-
         batch.end();
     }
 
@@ -99,31 +97,11 @@ public class Game extends ApplicationAdapter {
      * @param delta o tempo que passou desde o último "quadro".
      */
     public void update(float delta) {
+        //Faz update do Goomba
+        gmbGoomba.update(delta);
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        //Movimento vertical para cima do Goomba
-        if(Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)){
-            if(fltPosition[1] < (mapLevelsTextures[0].getHeight() - sprGoomba.getHeight()))
-                fltPosition[1]++;
-        }
-        //Movimento vertical para baixo do Goomba
-        if(Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)){
-            if(fltPosition[1] > 0)
-                fltPosition[1]--;
-        }
-        //Movimento horizontal para direita do Goomba
-        if(Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)){
-            if(fltPosition[0] < (mapLevelsTextures[0].getWidth() - sprGoomba.getWidth()))
-                fltPosition[0]++;
-        }
-        //Movimento vertical para baixo do Goomba
-        if(Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)){
-            if(fltPosition[0] > 0)
-                fltPosition[0]--;
-        }
-        
-
         // ...
     }
     
