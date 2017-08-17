@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -24,7 +25,9 @@ public class Game extends ApplicationAdapter {
 
     private SpriteBatch batch;
     private Texture[] mapLevelsTextures;
-    
+    private Texture texGoomba;
+    private Sprite sprGoomba;
+    private float[] fltPosition = new float[2]; 
     /**
      * No método create colocamos código de inicialização do jogo. Por exemplo,
      * carregamos texturas, sons e outros recursos. Aqui também instanciamos
@@ -34,9 +37,16 @@ public class Game extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        //Cria cenario
         mapLevelsTextures = new Texture[2];
         mapLevelsTextures[0] = new Texture("map-level-1.png");
         mapLevelsTextures[1] = new Texture("map-level-2.png");
+        //Cria jogador
+        texGoomba = new Texture("goomba.png"); //define a textura
+        sprGoomba = new Sprite(texGoomba); //cria o sprite
+        fltPosition[0] = 30; //Coordenada x
+        fltPosition[1] = 10; //Coordenada y
+        sprGoomba.setPosition(fltPosition[0], fltPosition[1]); //seta a posicao inicial
 
         
         // cor de fundo da tela: branco
@@ -73,6 +83,7 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
+            sprGoomba.draw(batch);
             batch.draw(mapLevelsTextures[1], 0, 0);
 
         batch.end();
