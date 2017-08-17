@@ -46,8 +46,6 @@ public class Game extends ApplicationAdapter {
         sprGoomba = new Sprite(texGoomba); //cria o sprite
         fltPosition[0] = 30; //Coordenada x
         fltPosition[1] = 10; //Coordenada y
-        sprGoomba.setPosition(fltPosition[0], fltPosition[1]); //seta a posicao inicial
-
         
         // cor de fundo da tela: branco
         Gdx.gl.glClearColor(1, 1, 1, 1);        
@@ -83,6 +81,7 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
+            sprGoomba.setPosition(fltPosition[0], fltPosition[1]); //seta a posicao
             sprGoomba.draw(batch);
             batch.draw(mapLevelsTextures[1], 0, 0);
 
@@ -103,6 +102,27 @@ public class Game extends ApplicationAdapter {
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+        //Movimento vertical para cima do Goomba
+        if(Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)){
+            if(fltPosition[1] < (mapLevelsTextures[0].getHeight() - sprGoomba.getHeight()))
+                fltPosition[1]++;
+        }
+        //Movimento vertical para baixo do Goomba
+        if(Gdx.input.isKeyPressed(Keys.DOWN) || Gdx.input.isKeyPressed(Keys.S)){
+            if(fltPosition[1] > 0)
+                fltPosition[1]--;
+        }
+        //Movimento horizontal para direita do Goomba
+        if(Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)){
+            if(fltPosition[0] < (mapLevelsTextures[0].getWidth() - sprGoomba.getWidth()))
+                fltPosition[0]++;
+        }
+        //Movimento vertical para baixo do Goomba
+        if(Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)){
+            if(fltPosition[0] > 0)
+                fltPosition[0]--;
+        }
+        
 
         // ...
     }
